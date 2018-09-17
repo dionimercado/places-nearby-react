@@ -1,8 +1,77 @@
-.list-group {
-  position: relative;
+.places-header {
+  position: fixed;
+  top: 0;
+  right: 0;
   z-index: 9999;
+  height: 100vh;
+}
+.places-list {
+  overflow: auto;
+  position: fixed;
+  height: 100vh;
 }
 
 .list-group-item.active {
-  padding: 1.13rem 1.25rem;
+  padding: 0.55rem 1.25rem;
+}
+
+.gmap > div > div > div {
+  width: 75% !important;
+}
+
+/* your custom CSS \*/
+@-moz-keyframes pulsate {
+  from {
+    -moz-transform: scale(0.25);
+    opacity: 1;
+  }
+  95% {
+    -moz-transform: scale(1.3);
+    opacity: 0;
+  }
+  to {
+    -moz-transform: scale(0.3);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes pulsate {
+  from {
+    -webkit-transform: scale(0.25);
+    opacity: 1;
+  }
+  95% {
+    -webkit-transform: scale(1.3);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: scale(0.3);
+    opacity: 0;
+  }
+}
+/* get the container that's just outside the marker image,
+		which just happens to have our Marker title in it */
+.gmap div[title="imhere"] {
+  -moz-animation: pulsate 1.5s ease-in-out infinite;
+  -webkit-animation: pulsate 1.5s ease-in-out infinite;
+  border: 1pt solid #fff;
+  /* make a circle */
+  -moz-border-radius: 51px;
+  -webkit-border-radius: 51px;
+  border-radius: 51px;
+  /* multiply the shadows, inside and outside the circle */
+  -moz-box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f,
+    0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+  -webkit-box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f,
+    0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+  box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f,
+    0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+  /* set the ring's new dimension and re-center it */
+  height: 51px !important;
+  margin: -10px 0 0 -8px;
+  width: 51px !important;
+}
+/* hide the superfluous marker image since it would expand and shrink with its containing element */
+/*	.gmap div[style*="987654"][title] img {*/
+.gmap div[title="imhere"] img {
+  display: none;
 }
