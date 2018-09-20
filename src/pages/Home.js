@@ -15,10 +15,6 @@ export default class Home extends Component {
     currentPlacePos: {}
   };
 
-  changeRating = stars => {
-    console.log(stars);
-  };
-
   onPlaceClick = latlng => {
     console.log("place latlng", latlng);
     this.setState({ currentPlacePos: latlng });
@@ -50,11 +46,12 @@ export default class Home extends Component {
           }
         }
       );
-      console.log("My position is:", position);
+      // console.log("My position is:", position);
     });
   };
 
   render() {
+    // console.log("places", this.state.places);
     return (
       <div className="d-flex">
         <div className="w-75 gmap">
@@ -67,7 +64,6 @@ export default class Home extends Component {
           <Places
             places={this.state.places}
             currentPos={this.state.currentPos}
-            changeRating={this.changeRating}
             onClick={this.onPlaceClick}
           />
         </div>

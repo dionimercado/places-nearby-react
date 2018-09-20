@@ -30,12 +30,11 @@ export class GoogleMaps extends Component {
   };
 
   componentWillReceiveProps = nextProps => {
-    console.log("reCenter", nextProps.reCenter);
     this.setState({ initialCenter: nextProps.reCenter });
   };
 
   onReady = map => {
-    console.log("map loaded", map);
+    // console.log("map loaded", map);
   };
 
   onMarkerClick = (props, marker, e) =>

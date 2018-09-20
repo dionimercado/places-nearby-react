@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Places from "../components/Places";
 import PlaceDetails from "../components/PlaceDetails";
 import Reviews from "../components/Reviews";
 
@@ -14,6 +13,10 @@ export default class Place extends Component {
     loadingPlaces: true,
     place: {},
     reviews: []
+  };
+
+  addReview = data => {
+    this.setState({ reviews: [...this.state.reviews, data] });
   };
 
   componentDidMount = () => {
@@ -44,7 +47,7 @@ export default class Place extends Component {
           <PlaceDetails place={this.state.place} />
         </div>
         <div className="w-25">
-          <Reviews reviews={this.state.reviews} />
+          <Reviews addReview={this.addReview} reviews={this.state.reviews} />
         </div>
       </div>
     );
