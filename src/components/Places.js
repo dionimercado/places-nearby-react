@@ -1,12 +1,24 @@
 import React from "react";
+import StarRatings from "react-star-ratings";
 
-const Places = () => (
+const Places = ({ data }) => (
   <ul className="list-group">
-    <li className="list-group-item active rounded-0">Cras justo odio</li>
-    <li className="list-group-item">Dapibus ac facilisis in</li>
-    <li className="list-group-item">Morbi leo risus</li>
-    <li className="list-group-item">Porta ac consectetur ac</li>
-    <li className="list-group-item">Vestibulum at eros</li>
+    <li className="list-group-item active rounded-0">Nearby Places</li>
+    {data.map(place => (
+      <li key={place.id} className="list-group-item">
+        <h4>{place.name}</h4>
+        <div>
+          <span className="badge badge-secondary mr-3">{place.rating}</span>
+          <StarRatings
+            rating={place.rating}
+            numberOfStars={5}
+            starRatedColor="orange"
+            starDimension="20px"
+            starSpacing="5px"
+          />
+        </div>
+      </li>
+    ))}
   </ul>
 );
 
