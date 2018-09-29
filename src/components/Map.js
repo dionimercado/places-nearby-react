@@ -1,13 +1,101 @@
-import React from "react";
+import React, { Component } from "react";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
-const Map = () => (
-  <iframe
-    title="Map"
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23447.846315940275!2d-71.18049836487936!3d42.725297332972765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e307773d37c907%3A0x39c0929950656fb!2sSunnyside+Diner!5e0!3m2!1sen!2sus!4v1536421407549"
-    frameBorder="0"
-    style={{ border: 0, width: "100%", height: "100vh" }}
-    allowFullScreen
-  />
-);
+class GoogleMap extends Component {
+  state = {
+    currentPos: {
+      lat: 40,
+      lng: -88
+    },
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {}
+  };
 
-export default Map;
+  componentDidMount = () => {
+    navigator.geolocation.getCurrentPosition(position =>
+      this.setState({
+        currentPos: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+      })
+    );
+  };
+
+  onMarkerClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+
+  onMapClicked = props => {
+    console.log("props", props);
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  };
+
+  render() {
+    const google = this.props.google;
+    console.log("places", this.props);
+    return (
+      <Map
+        google={google}
+        style={{ width: "75%", height: "100%" }}
+        center={this.state.currentPos}
+        zoom={15}
+        onClick={this.onMapClicked}
+      >
+        <Marker
+          onClick={this.onMarkerClick}
+          position={this.state.currentPos}
+          name={"Current location"}
+        />
+
+        {this.props.places.map(place => (
+          <Marker
+            key={place.id}
+            onClick={this.onMarkerClick}
+            position={place.geometry.location}
+            name={place.name}
+            address={place.vicinity}
+            placeid={place.place_id}
+            icon={{
+              url: "/restaurant.png",
+              anchor: new google.maps.Point(32, 32),
+              scaledSize: new google.maps.Size(32, 32)
+            }}
+          />
+        ))}
+
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+          onClose={this.onInfoWindowClose}
+        >
+          <div>
+            <h1>{this.state.selectedPlace.name}</h1>
+            <p>{this.state.selectedPlace.address}</p>
+            <button
+              onClick={() =>
+                this.props.linkTo(`/${this.state.selectedPlace.placeid}`)
+              }
+              className="btn btn-info"
+            >
+              More Info
+            </button>
+          </div>
+        </InfoWindow>
+      </Map>
+    );
+  }
+}
+
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyBOmxUJzDrJvFM2ke39fTQe0tZdGcLh3Vk"
+})(GoogleMap);
