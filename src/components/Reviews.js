@@ -31,7 +31,7 @@ class Reviews extends Component {
           ""
         )}
         <div style={{ overflow: "scroll" }} className="h-100">
-          {reviews.reverse().map(review => (
+          {reviews.map(review => (
             <div key={review.time} className="card mb-3">
               <div className="card-body">
                 <div className="mb-4">

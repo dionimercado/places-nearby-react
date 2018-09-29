@@ -18,7 +18,8 @@ const PlaceDetails = ({ place }) => {
 
   //   console.log("url", url);
   // });
-
+  const obj = Object.values(place);
+  console.log("place", obj[4]);
   return (
     <div className="container">
       <Link
@@ -38,6 +39,11 @@ const PlaceDetails = ({ place }) => {
                   src={`https://maps.googleapis.com/maps/api/staticmap?center=${
                     place.formatted_address
                   }&zoom=12&size=1200x200&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
+                  alt={place.name}
+                />
+                <img
+                  className="img-fluid w-100"
+                  src={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=42.691914,-71.2080014&fov=90&heading=235&pitch=10&key=AIzaSyBOmxUJzDrJvFM2ke39fTQe0tZdGcLh3Vk&signature=GGHw-p6MpwRIlpZzu89zgAt0liw=`}
                   alt={place.name}
                 />
               </div>

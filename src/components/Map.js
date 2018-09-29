@@ -107,10 +107,7 @@ export class GoogleMaps extends Component {
                   <small className="text-danger">Closed</small>
                 )}
               </h1>
-              <p>
-                {this.state.selectedPlace.address} -
-                {this.state.selectedPlace.place_id}
-              </p>
+              <p>{this.state.selectedPlace.address}</p>
               <a
                 href={`/${this.state.selectedPlace.place_id}`}
                 className="btn btn-success"

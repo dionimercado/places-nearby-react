@@ -51,7 +51,6 @@ export default class Home extends Component {
   };
 
   render() {
-    // console.log("places", this.state.places);
     return (
       <div className="d-flex">
         <div className="w-75 gmap">

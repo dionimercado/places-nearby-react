@@ -16,7 +16,7 @@ export default class Place extends Component {
   };
 
   addReview = data => {
-    this.setState({ reviews: [...this.state.reviews, data] });
+    this.setState({ reviews: [data, ...this.state.reviews] });
   };
 
   componentDidMount = () => {
@@ -40,7 +40,7 @@ export default class Place extends Component {
   };
 
   render() {
-    console.log("props", this.props);
+    // console.log("Obj", Object.values(Obj[4]));
     return (
       <div className="d-flex mt-5 pt-5">
         <div className="w-75 place-details">
