@@ -1,14 +1,15 @@
-.places-header {
+.places-list {
   position: fixed;
-  top: 0;
+  top: 66px;
   right: 0;
   z-index: 9999;
-  height: 100vh;
-}
-.places-list {
+  height: calc(100vh - 62px);
   overflow: auto;
-  position: fixed;
-  height: 100vh;
+}
+
+.places-list ul {
+  width: 100%;
+  /* position: fixed; */
 }
 
 .list-group-item.active {
@@ -74,4 +75,27 @@
 /*	.gmap div[style*="987654"][title] img {*/
 .gmap div[title="imhere"] img {
   display: none;
+}
+
+.image-block {
+  border: 3px solid white;
+  background-color: black;
+  padding: 0px;
+  margin: 0px;
+  height: 200px;
+  text-align: center;
+  vertical-align: bottom;
+}
+.image-block > p {
+  width: 100%;
+  height: 100%;
+  font-weight: normal;
+  font-size: 19px;
+  padding-top: 150px;
+  background-color: rgba(3, 3, 3, 0);
+  color: rgba(6, 6, 6, 0);
+}
+.image-block:hover > p {
+  background-color: rgba(3, 3, 3, 0.5);
+  color: white;
 }

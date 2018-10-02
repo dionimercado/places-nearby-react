@@ -65,6 +65,7 @@ export class GoogleMaps extends Component {
           {this.props.places.map(place => {
             // console.log("mapPlaces", this.state);
             // console.log("place:", place.opening_hours);
+            console.log("selectedPlace", this.state.selectedPlace);
             return (
               <Marker
                 key={place.id}
@@ -99,18 +100,22 @@ export class GoogleMaps extends Component {
             visible={this.state.showingInfoWindow}
           >
             <div>
-              <h1>
+              <h3>
                 {this.state.selectedPlace.name}{" "}
                 {this.state.selectedPlace.is_open ? (
-                  <small className="text-success">Open</small>
+                  <span className="badge badge-success">Open</span>
                 ) : (
-                  <small className="text-danger">Closed</small>
+                  <span className="badge badge-danger">Closed</span>
                 )}
-              </h1>
+              </h3>
               <p>{this.state.selectedPlace.address}</p>
               <a
-                href={`/${this.state.selectedPlace.place_id}`}
-                className="btn btn-success"
+                href={`/${this.state.selectedPlace.place_id}-${this.state
+                  .selectedPlace.position &&
+                  this.state.selectedPlace.position.lat}-${this.state
+                  .selectedPlace.position &&
+                  this.state.selectedPlace.position.lng}`}
+                className="btn btn-primary"
               >
                 See place
               </a>

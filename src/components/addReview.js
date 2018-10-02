@@ -4,9 +4,9 @@ import StarRatings from "react-star-ratings";
 export default class AddReview extends Component {
   state = {
     profile_photo_url: "/no-avatar.png",
-    rating: 0,
-    author_name: "Dioni M",
-    text: "My personal comment...",
+    rating: 1,
+    author_name: "",
+    text: "",
     time: Date.now()
   };
 

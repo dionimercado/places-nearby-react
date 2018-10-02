@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Header from "../components/Header";
 import PlaceDetails from "../components/PlaceDetails";
 import Reviews from "../components/Reviews";
 
@@ -40,16 +41,21 @@ export default class Place extends Component {
   };
 
   render() {
-    // console.log("Obj", Object.values(Obj[4]));
     return (
-      <div className="d-flex mt-5 pt-5">
-        <div className="w-75 place-details">
-          <PlaceDetails place={this.state.place} />
+      <React.Fragment>
+        <Header brand="Restaurant Reviews" />
+        <div className="d-flex mt-5 pt-5">
+          <div className="w-75 place-details">
+            <PlaceDetails
+              place={this.state.place}
+              params={this.props.match.params}
+            />
+          </div>
+          <div className="w-25">
+            <Reviews addReview={this.addReview} reviews={this.state.reviews} />
+          </div>
         </div>
-        <div className="w-25">
-          <Reviews addReview={this.addReview} reviews={this.state.reviews} />
-        </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

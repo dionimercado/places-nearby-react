@@ -2,24 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 
-const PlaceDetails = ({ place }) => {
-  // const photos = place.photos;
-  // const values = Object.values(place);
-  // place.photos.map(photo => console.log("photo", photo));
-  // const { lat, lng } = place.geometry.location;
-  // const location = place.geometry;
-  // console.log(location);
+const PlaceDetails = ({ place, params }) => {
+  const photos = place.photos;
+  const photoReferences = [];
 
-  // place.photos.map(placePhoto => {
-  //   var url = placePhoto.getUrl({
-  //     maxWidth: 600,
-  //     maxHeight: 400
-  //   });
+  for (let photo in photos) {
+    // console.log("photo", photos[photo].photo_reference);
+    photoReferences.push(photos[photo].photo_reference);
+  }
 
-  //   console.log("url", url);
-  // });
-  const obj = Object.values(place);
-  console.log("place", obj[4]);
+  console.log(photoReferences);
+
+  console.log("place", JSON.stringify(photos));
   return (
     <div className="container">
       <Link
@@ -33,29 +27,43 @@ const PlaceDetails = ({ place }) => {
         <div className="col-md-10 mx-auto">
           <div>
             <header className="d-flex">
-              <div className="w-75">
+              <div className="w-75 position-relative">
+                <img
+                  className="img-fluid w-100"
+                  src={`https://maps.googleapis.com/maps/api/streetview?location=${
+                    params.lat
+                  },${
+                    params.lng
+                  }&size=600x400&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
+                  alt={place.name}
+                />
+                <div
+                  className="p-4 w-100 position-absolute p-3"
+                  style={{
+                    bottom: 0,
+                    left: 0,
+                    backgroundColor: "rgba(0,0,0,.7)",
+                    color: "white"
+                  }}
+                >
+                  <h5>Address</h5>
+                  <p>{place.formatted_address}</p>
+                  <h5>Phone</h5>
+                  <p>{place.formatted_phone_number}</p>
+                </div>
+              </div>
+              <div className="w-25">
                 <img
                   className="img-fluid w-100"
                   src={`https://maps.googleapis.com/maps/api/staticmap?center=${
                     place.formatted_address
-                  }&zoom=12&size=1200x200&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
+                  }&zoom=12&size=230x460&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
                   alt={place.name}
                 />
-                <img
-                  className="img-fluid w-100"
-                  src={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=42.691914,-71.2080014&fov=90&heading=235&pitch=10&key=AIzaSyBOmxUJzDrJvFM2ke39fTQe0tZdGcLh3Vk&signature=GGHw-p6MpwRIlpZzu89zgAt0liw=`}
-                  alt={place.name}
-                />
-              </div>
-              <div className="w-25">
-                <div className="bg-light border p-4 h-100">
-                  <p>{place.formatted_address}</p>
-                  <p>{place.formatted_phone_number}</p>
-                </div>
               </div>
             </header>
           </div>
-          <div className="d-flex justify-content-between border px-3 mt-4 bg-info text-white">
+          <div className="d-flex justify-content-between border px-3 bg-info text-white">
             <h2 className="my-1">{place.name}</h2>
             <div className="mt-2">
               <StarRatings
@@ -67,16 +75,29 @@ const PlaceDetails = ({ place }) => {
             </div>
           </div>
 
-          <div>
-            {/* {place.photos.map(photo => (
-              <div className="col-md-3">
-                <img
-                  src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
-                    photo.photo_reference
-                  }&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
-                />
+          <div className="row p-3">
+            {photoReferences.splice(0, 8).map(photo => (
+              <div
+                className="col-md-3 image-block"
+                style={{
+                  backgroundSize: "cover",
+                  background: `url(
+                  https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs
+                ) center center no-repeat`
+                }}
+              >
+                <a
+                  style={{ width: "100%", height: "100%", display: "block" }}
+                  href={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photoreference=${photo}&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
+                  data-fancybox="gallery"
+                >
+                  {/* <img
+                    className="w-100"
+                    src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
+                  /> */}
+                </a>
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
       </div>
