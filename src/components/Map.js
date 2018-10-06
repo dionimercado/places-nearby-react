@@ -81,14 +81,12 @@ class GoogleMap extends Component {
           <div>
             <h1>{this.state.selectedPlace.name}</h1>
             <p>{this.state.selectedPlace.address}</p>
-            <button
-              onClick={() =>
-                this.props.linkTo(`/${this.state.selectedPlace.placeid}`)
-              }
+            <a
+              href={`/${this.state.selectedPlace.placeid}`}
               className="btn btn-info"
             >
               More Info
-            </button>
+            </a>
           </div>
         </InfoWindow>
       </Map>

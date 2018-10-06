@@ -17,7 +17,6 @@ class App extends Component {
 
   componentDidMount = () => {
     navigator.geolocation.getCurrentPosition(position => {
-      console.log("My position is:", position);
       googleMapsClient.placesNearby(
         {
           location: {
@@ -45,6 +44,7 @@ class App extends Component {
           <div>
             <Header brand="Restaurant Reviews" />
             <Route
+              exact
               path="/"
               render={() => <Main places={this.state.places} />}
             />
