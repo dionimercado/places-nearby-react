@@ -48,7 +48,7 @@ class App extends Component {
               path="/"
               render={() => <Main places={this.state.places} />}
             />
-            <Route path="/:place_id" component={Place} />
+            <Route path="/:place_id/:lat/:lng" component={Place} />
           </div>
         </Router>
       </div>

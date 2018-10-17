@@ -9,7 +9,9 @@ class GoogleMap extends Component {
     },
     showingInfoWindow: false,
     activeMarker: {},
-    selectedPlace: {}
+    selectedPlace: {
+      position: {}
+    }
   };
 
   componentDidMount = () => {
@@ -42,7 +44,7 @@ class GoogleMap extends Component {
 
   render() {
     const google = this.props.google;
-    console.log("places", this.props);
+    // console.log("selectedPlace", this.state.selectedPlace.location.toString());
     return (
       <Map
         google={google}
@@ -82,7 +84,9 @@ class GoogleMap extends Component {
             <h1>{this.state.selectedPlace.name}</h1>
             <p>{this.state.selectedPlace.address}</p>
             <a
-              href={`/${this.state.selectedPlace.placeid}`}
+              href={`/${this.state.selectedPlace.placeid}/${
+                this.state.selectedPlace.position.lat
+              }/${this.state.selectedPlace.position.lng}`}
               className="btn btn-info"
             >
               More Info

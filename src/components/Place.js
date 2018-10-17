@@ -9,6 +9,7 @@ const googleMapsClient = gmaps.createClient({
 export default class componentName extends Component {
   state = {
     place: {
+      opening_hours: { weekday_text: [] },
       reviews: []
     }
   };
@@ -31,32 +32,83 @@ export default class componentName extends Component {
   render() {
     const { place } = this.state;
 
+    const { lat, lng } = this.props.match.params;
+
     console.log("place", place);
+    console.log("opening_hours.weekday_text", place.opening_hours.weekday_text);
 
     let photos = [];
     for (let photo in place.photos) {
       photos.push(place.photos[photo].photo_reference);
     }
 
+    const hours = place.opening_hours.weekday_text.map((item, key) => (
+      <li key={key}>{item}</li>
+    ));
+
     return (
       <div className="container-fluid mt-5 pt-5">
         <div className="row">
-          <div className="col-8">
-            <img
-              src="https://maps.googleapis.com/maps/api/streetview?location=41.403609,2.174448&size=456x456&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs"
-              alt=""
-            />
-            <h2>{place.name}</h2>
+          <div className="col-md-8">
             <div className="row">
-              {photos.map(photo => (
-                <div className="col-3">
-                  <img
-                    className="img-fluid"
-                    src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=AIzaSyBOmxUJzDrJvFM2ke39fTQe0tZdGcLh3Vk`}
-                    alt=""
-                  />
+              <div className="col-md-6">
+                <img
+                  className="w-100"
+                  src={`https://maps.googleapis.com/maps/api/streetview?location=${lat},${lng}&size=456x459&key=AIzaSyCuMV8HTZCAxl1GN1VNKOYMUn2_DUttqcs`}
+                  alt=""
+                />
+              </div>
+              <div className="col-md-6">
+                <div
+                  className="mt-3 mt-md-0"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gridTemplateRows: "repeat(3, 1fr)",
+                    height: "100%",
+                    minHeight: "300px"
+                  }}
+                >
+                  {photos.splice(0, 9).map(photo => (
+                    <a
+                      href={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=AIzaSyBOmxUJzDrJvFM2ke39fTQe0tZdGcLh3Vk`}
+                      key={photo}
+                      className="place-gallery"
+                      style={{
+                        background: `url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=AIzaSyBOmxUJzDrJvFM2ke39fTQe0tZdGcLh3Vk') center center no-repeat`
+                      }}
+                    />
+                  ))}
                 </div>
-              ))}
+              </div>
+            </div>
+
+            <div className="bg-info p-3 mt-4">
+              <h2 className="text-white d-flex justify-content-between">
+                {place.name}
+                <StarRatings
+                  rating={place.rating}
+                  numberOfStars={5}
+                  starRatedColor="orange"
+                  starDimension="20px"
+                  starSpacing="1px"
+                />
+              </h2>
+              <hr />
+              <p className="text-black-50">{place.formatted_address}</p>
+              <p className="text-black-50">{place.formatted_phone_number}</p>
+              <div
+                className="p-4"
+                style={{
+                  backgroundColor: "rgba(255,255,255,.2)",
+                  display: "inline-block"
+                }}
+              >
+                <h3 className="text-white">Opening Hours</h3>
+                <ul className="m-0 p-0" style={{ listStyle: "none" }}>
+                  {hours}
+                </ul>
+              </div>
             </div>
           </div>
           <div className="col-md-4">
