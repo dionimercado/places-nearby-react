@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import StarRatings from "react-star-ratings";
 import gmaps from "@google/maps";
+import AddReviewForm from "./AddReview";
 
 const googleMapsClient = gmaps.createClient({
   key: "AIzaSyBOmxUJzDrJvFM2ke39fTQe0tZdGcLh3Vk"
@@ -9,9 +10,10 @@ const googleMapsClient = gmaps.createClient({
 export default class componentName extends Component {
   state = {
     place: {
-      opening_hours: { weekday_text: [] },
-      reviews: []
-    }
+      opening_hours: { weekday_text: [] }
+    },
+    reviews: [],
+    addingReview: false
   };
 
   componentDidMount = () => {
@@ -21,7 +23,10 @@ export default class componentName extends Component {
       },
       (err, response) => {
         if (!err) {
-          this.setState({ place: response.json.result });
+          this.setState({
+            place: response.json.result,
+            reviews: response.json.result.reviews
+          });
         } else {
           console.log("Error:", err);
         }
@@ -29,13 +34,24 @@ export default class componentName extends Component {
     );
   };
 
+  addReview = data => {
+    console.log(data);
+    this.setState({ reviews: [data, ...this.state.reviews] });
+  };
+
   render() {
-    const { place } = this.state;
+    const { place, reviews } = this.state;
+
+    console.log(place);
 
     const { lat, lng } = this.props.match.params;
-
-    console.log("place", place);
-    console.log("opening_hours.weekday_text", place.opening_hours.weekday_text);
+    // const location = {lat:"", lng: ""};
+    // for (let geo in place.geometry) {
+    //   lat = place.geometry[geo].lat;
+    //   lng = place.geometry[geo].lng;
+    // }
+    console.log("latLng", lat, lng);
+    // console.log("opening_hours.weekday_text", place.opening_hours.weekday_text);
 
     let photos = [];
     for (let photo in place.photos) {
@@ -112,8 +128,19 @@ export default class componentName extends Component {
             </div>
           </div>
           <div className="col-md-4">
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                this.setState({ addingReview: !this.state.addingReview })
+              }
+            >
+              {this.state.addingReview ? "Cancel" : "Add Review"}
+            </button>
+            {this.state.addingReview && (
+              <AddReviewForm submit={this.addReview} />
+            )}
             <ul className="list-group">
-              {place.reviews.map(review => (
+              {reviews.map(review => (
                 <li key={review.time} className="list-group-item">
                   <div>
                     <img
