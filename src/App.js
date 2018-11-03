@@ -15,6 +15,11 @@ class App extends Component {
     places: []
   };
 
+  newPlace = data => {
+    console.log("newPlace", data);
+    this.setState({ places: [...this.state.places, data] });
+  };
+
   componentDidMount = () => {
     navigator.geolocation.getCurrentPosition(position => {
       googleMapsClient.placesNearby(
@@ -38,6 +43,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("places", this.state.places);
     return (
       <div className="App">
         <Router>
@@ -46,7 +52,9 @@ class App extends Component {
             <Route
               exact
               path="/"
-              render={() => <Main places={this.state.places} />}
+              render={() => (
+                <Main places={this.state.places} newPlace={this.newPlace} />
+              )}
             />
             <Route path="/:place_id/:lat/:lng" component={Place} />
           </div>

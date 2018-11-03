@@ -32,6 +32,7 @@ class Main extends Component {
       <div className="d-flex">
         <div className="w-75">
           <Map
+            newPlace={this.props.newPlace}
             places={
               this.state.filter > 0
                 ? this.state.filteredPlaces

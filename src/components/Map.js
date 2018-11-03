@@ -11,7 +11,8 @@ class GoogleMap extends Component {
     activeMarker: {},
     selectedPlace: {
       position: {}
-    }
+    },
+    newPlace: {}
   };
 
   componentDidMount = () => {
@@ -33,7 +34,21 @@ class GoogleMap extends Component {
     });
 
   onMapClicked = props => {
+    const newPlace = {
+      geometry: {
+        location: {
+          lat: 42.720202,
+          lng: -71.176194
+        }
+      },
+      id: new Date().getTime(),
+      name: "New place name...",
+      rating: 3
+    };
+
+    this.setState({ newPlace });
     console.log("props", props);
+    this.props.newPlace(this.state.newPlace);
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
